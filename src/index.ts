@@ -161,49 +161,102 @@
 
 //type guards
 
-type idOne = string;
-type idTwo = number;
+// type idOne = string;
+// type idTwo = number;
 
-type userId = idOne | idTwo;
+// type userId = idOne | idTwo;
 
-function swapId(id: userId) {
-  if (typeof id === "string") {
-    return parseInt(id);
-  }
+// function swapId(id: userId) {
+//   if (typeof id === "string") {
+//     return parseInt(id);
+//   }
 
-  if (typeof id === "number") {
-    return id.toString();
-  }
-}
+//   if (typeof id === "number") {
+//     return id.toString();
+//   }
+// }
 
-console.log(swapId("1"));
-console.log(swapId(4));
+// console.log(swapId("1"));
+// console.log(swapId(4));
 
-//tagged interface
-interface Circle {
-  kind: "circle"; // Tag
-  radius: number;
-}
+// //tagged interface
+// interface Circle {
+//   kind: "circle"; // Tag
+//   radius: number;
+// }
 
-interface Triangle {
-  kind: "triangle"; // Tag
-  base: number;
-  height: number;
-}
+// interface Triangle {
+//   kind: "triangle"; // Tag
+//   base: number;
+//   height: number;
+// }
 
-// Union of shapes
-type Shape = Circle | Triangle;
+// // Union of shapes
+// type Shape = Circle | Triangle;
 
-// Function to calculate the area
-function calculateArea(shape: Shape): number {
-  switch (shape.kind) {
-    case "circle":
-      return Math.PI * shape.radius ** 2;
+// // Function to calculate the area
+// function calculateArea(shape: Shape): number {
+//   switch (shape.kind) {
+//     case "circle":
+//       return Math.PI * shape.radius ** 2;
 
-    case "triangle":
-      return (shape.base * shape.height) / 2;
+//     case "triangle":
+//       return (shape.base * shape.height) / 2;
 
-    default:
-      throw new Error("Unknown shape");
-  }
-}
+//     default:
+//       throw new Error("Unknown shape");
+//   }
+// }
+
+//function signature
+//by type aliases
+// type Calculater = (numOne: number, numTwo: number) => number;
+// //by using interfaces
+// interface Comparator {
+//   (a: number, b: number): boolean;
+// }
+
+// //extending interfaces
+// interface BaseInterface {
+//   property1: string;
+// }
+
+// interface ExtendedInterface extends BaseInterface {
+//   property2: number;
+// }
+
+// interface Person {
+//   name: string;
+// }
+
+// interface Employee extends Person {
+//   employeeId: number;
+// }
+
+// const employee: Employee = {
+//   name: "John Doe",
+//   employeeId: 12345,
+// };
+
+//extending type eliases
+
+type BaseType = {
+  property1: string;
+};
+
+type ExtendedType = BaseType & {
+  property2: number;
+};
+
+type Person = {
+  name: string;
+};
+
+type Employee = Person & {
+  employeeId: number;
+};
+
+const employee: Employee = {
+  name: "Jane Doe",
+  employeeId: 67890,
+};
