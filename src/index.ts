@@ -240,23 +240,113 @@
 
 //extending type eliases
 
-type BaseType = {
-  property1: string;
-};
+// type BaseType = {
+//   property1: string;
+// };
 
-type ExtendedType = BaseType & {
-  property2: number;
-};
+// type ExtendedType = BaseType & {
+//   property2: number;
+// };
 
-type Person = {
-  name: string;
-};
+// type Person = {
+//   name: string;
+// };
 
-type Employee = Person & {
-  employeeId: number;
-};
+// type Employee = Person & {
+//   employeeId: number;
+// };
 
-const employee: Employee = {
-  name: "Jane Doe",
-  employeeId: 67890,
-};
+// const employee: Employee = {
+//   name: "Jane Doe",
+//   employeeId: 67890,
+// };
+
+// //....................................................................
+// //Classes
+// type Base = "classic" | "thick" | "thin" | "garlic";
+
+// class Pizza {
+//   private title: string;
+//   private price: number;
+//   private base: Base = "classic";
+//   private toppings: string[] = [];
+//   constructor(title: string, price: number) {
+//     this.title = title;
+//     this.price = price;
+//   }
+
+//   addTopping(topping: string): void {
+//     this.toppings.push(topping);
+//   }
+//   romoveTopping(topping: string): void {
+//     this.toppings = this.toppings.filter((t) => t !== topping);
+//   }
+
+//   selectBase(base: Base): void {
+//     this.base = base;
+//   }
+// }
+
+// const pizzaOne = new Pizza("PZ1", 15);
+// console.log(pizzaOne);
+
+// pizzaOne.addTopping("olive");
+// pizzaOne.addTopping("chease");
+// pizzaOne.addTopping("tomatto");
+// console.log(pizzaOne);
+
+// pizzaOne.romoveTopping("tomatto");
+// console.log(pizzaOne);
+
+// pizzaOne.selectBase("garlic");
+// console.log(pizzaOne);
+
+//........................
+//CSV WRITER PROJECT
+//........................
+import { appendFileSync } from "fs"; //it id a js module,,, ts have no idea about so we need to instal -D @types/node
+interface Payment {
+  id: number;
+  amount: number;
+  to: string;
+  notes: string;
+}
+
+type PaymentColumns = ("id" | "amount" | "to" | "notes")[];
+
+class CSVWriter {
+  private columns: PaymentColumns;
+  private csv: string;
+
+  save(filename: string): void {
+    appendFileSync(filename, this.csv);
+    this.csv = "\n";
+  }
+
+  constructor(columns: PaymentColumns) {
+    this.columns = columns;
+    this.csv = this.columns.join(",") + "\n";
+
+    console.log("file saved successfuly");
+  }
+
+  addRows(values: Payment[]): void {
+    let row = values.map((value) => this.formatRow(value));
+    this.csv += row.join("\n");
+    console.log(this.csv);
+  }
+
+  formatRow(p: Payment): string {
+    return this.columns.map((col) => p[col]).join(",");
+  }
+}
+
+const writer = new CSVWriter(["id", "amount", "to", "notes"]);
+
+writer.addRows([
+  { id: 1, amount: 50, to: "juigi", notes: "Job" },
+  { id: 2, amount: 40, to: "jhon", notes: "Service" },
+  { id: 2, amount: 44, to: "nino", notes: "Service" },
+]);
+
+writer.save("./data/payments.csv");
