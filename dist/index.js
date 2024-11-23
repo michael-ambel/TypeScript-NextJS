@@ -2,6 +2,7 @@
 // let age = 30;
 // console.log(age);
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CSVWriter = void 0;
 // ...................................
 // //arrays and object literals
 // let names: string[] = ["apple", "banana"];
@@ -231,8 +232,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // console.log(pizzaOne);
 // pizzaOne.selectBase("garlic");
 // console.log(pizzaOne);
+// //........................
+// //CSV WRITER PROJECT
+// //........................
+// import { appendFileSync } from "fs"; //it id a js module,,, ts have no idea about so we need to instal -D @types/node
+// interface Payment {
+//   id: number;
+//   amount: number;
+//   to: string;
+//   notes: string;
+// }
+// type PaymentColumns = ("id" | "amount" | "to" | "notes")[];
+// class CSVWriter {
+//   private columns: PaymentColumns;
+//   private csv: string;
+//   save(filename: string): void {
+//     appendFileSync(filename, this.csv);
+//     this.csv = "\n";
+//   }
+//   constructor(columns: PaymentColumns) {
+//     this.columns = columns;
+//     this.csv = this.columns.join(",") + "\n";
+//     console.log("file saved successfuly");
+//   }
+//   addRows(values: Payment[]): void {
+//     let row = values.map((value) => this.formatRow(value));
+//     this.csv += row.join("\n");
+//     console.log(this.csv);
+//   }
+//   formatRow(p: Payment): string {
+//     return this.columns.map((col) => p[col]).join(",");
+//   }
+// }
+// const writer = new CSVWriter(["id", "amount", "to", "notes"]);
+// writer.addRows([
+//   { id: 1, amount: 50, to: "juigi", notes: "Job" },
+//   { id: 2, amount: 40, to: "jhon", notes: "Service" },
+//   { id: 2, amount: 44, to: "nino", notes: "Service" },
+// ]);
+// writer.save("./data/payments.csv");
 //........................
-//CSV WRITER PROJECT
+//Refactor CSV WRITER PROJECT
 //........................
 const fs_1 = require("fs"); //it id a js module,,, ts have no idea about so we need to instal -D @types/node
 class CSVWriter {
@@ -250,14 +290,8 @@ class CSVWriter {
         this.csv += row.join("\n");
         console.log(this.csv);
     }
-    formatRow(p) {
-        return this.columns.map((col) => p[col]).join(",");
+    formatRow(val) {
+        return this.columns.map((col) => val[col]).join(",");
     }
 }
-const writer = new CSVWriter(["id", "amount", "to", "notes"]);
-writer.addRows([
-    { id: 1, amount: 50, to: "juigi", notes: "Job" },
-    { id: 2, amount: 40, to: "jhon", notes: "Service" },
-    { id: 2, amount: 44, to: "nino", notes: "Service" },
-]);
-writer.save("./data/payments.csv");
+exports.CSVWriter = CSVWriter;
