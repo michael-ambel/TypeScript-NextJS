@@ -24,7 +24,7 @@ form.addEventListener("submit", async (e) => {
   const res = await Pizza.save(newPizza);
 
   if (!res.ok) {
-    console.log("pizza not saved");
+    console.log("pizza can not be saved");
   }
   if (res.ok) {
     window.location.href = "./";
